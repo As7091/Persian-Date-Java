@@ -133,10 +133,12 @@ public class DateConverter {
     }
 
 
-    public static int[] convertMillisToPersianDateTime(long epochMillis) {
+    public static int[] convertMillisToPersianDateTime(long epochMillis, boolean treatAsUTC) {
         long daysToAdd = epochMillis / (24 * 3600 * 1000);
         int[] conversion = addDaysToPersianDate(new int[]{1348, 10, 11}, (int) daysToAdd);
         long timeLeft = epochMillis % (24 * 3600 * 1000);
+        //todo consider the daylight saving period where the below +3:30gmt was not correct.
+        if (treatAsUTC) timeLeft += (3600 * 100 * 35);
         int hours = (int) (timeLeft / (3600 * 1000));
         timeLeft %= (3600 * 1000);
         int minutes = (int) (timeLeft / (60 * 1000));
@@ -145,6 +147,11 @@ public class DateConverter {
         timeLeft %= 1000;
         int millis = (int) timeLeft;
         return new int[]{conversion[0], conversion[1], conversion[2], hours, minutes, seconds, millis};
+    }
+
+
+    public static int[] convertMillisToPersianDateTime(long epochMillis) {
+        return convertMillisToPersianDateTime(epochMillis, false);
     }
 
     public static long convertPersianToMillis(int[] persianDateTime) {

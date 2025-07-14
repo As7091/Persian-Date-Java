@@ -97,7 +97,7 @@ public class PersianCalendar {
             case 4 -> "چهارشنبه";
             case 5 -> "پنج\u200Cشنبه";
             case 6 -> "جمعه";
-            default -> "خطای محاسبه روز هفته"; //this does not happen
+            default -> "خطای محسابه روز"; //this does not happen
         };
     }
 
@@ -106,7 +106,24 @@ public class PersianCalendar {
         return new PersianCalendar(DateConverter.addDaysToPersianDate(getStartOfTheWeek().getFields(), -7));
     }
 
+    private static final String[] months = new String[]{
+            "فروردین",
+            "اردیبهشت",
+            "خرداد",
+            "تیر",
+            "مرداد",
+            "شهریور",
+            "مهر",
+            "آبان",
+            "آذر",
+            "دی",
+            "بهمن",
+            "اسفند",
+    };
 
+    public String getMonthName() {
+        return months[getMonthAsIndex()];
+    }
 
     public PersianCalendar getStartOfTheWeek() {
         return new PersianCalendar(DateConverter.addDaysToPersianDate(getFields(), -getDayOfWeekIndex()));
@@ -146,7 +163,7 @@ public class PersianCalendar {
     }
 
     public String toStringTimeHHMMSS() {
-        return twoDigitAtLeast(hour) + ":" + twoDigitAtLeast(minute) + twoDigitAtLeast(second);
+        return twoDigitAtLeast(hour) + ":" + twoDigitAtLeast(minute) + ":" + twoDigitAtLeast(second);
     }
 
     public String toStringTimeHHMM() {
@@ -165,6 +182,11 @@ public class PersianCalendar {
     public int getMonth() {
         return month;
     }
+
+    public int getMonthAsIndex() {
+        return month - 1;
+    }
+
 
     public int getDay() {
         return day;

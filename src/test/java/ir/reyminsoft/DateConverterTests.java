@@ -817,7 +817,6 @@ public class DateConverterTests implements TestClass {
     }
 
 
-    @ThisTestOnly
     public static void test_get_day_of_week(){
         assertEquals(6,DateConverter.getDayOfWeek(1,1,1));
         assertEquals(0,DateConverter.getDayOfWeek(1,1,2));
